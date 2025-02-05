@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Užsakymas ID: {{ uzsakymas.id }}</h1>
+    <h2>Klientas:</h2>
+    <p><b>Vardas:</b> {{ uzsakymas.automobilis.klientas.vardas }}</p>
+    <p><b>Pavardė:</b> {{ uzsakymas.automobilis.klientas.pavarde }}</p>
+    <p><b>Email:</b> {{ uzsakymas.automobilis.klientas.email }}</p>
+    <p><b>Automobilis:</b> {{ uzsakymas.automobilis.valst_nr }}
+        ({{ uzsakymas.automobilis.modelis }} | {{ uzsakymas.automobilis.metai}})</p>
+    <h2>Užsakymas:</h2>
+    <p><b>Sukurimo data:</b> {{ uzsakymas.sukurimo_data }}</p>
+    <p><b>Įmokėta suma:</b> {{ uzsakymas.imoketa_suma }} EUR</p>
+    <p><b>Statusas:</b> {{ uzsakymas.get_statusas_display }}</p>
+    <h2>Paslaugos:</h2>
+    <ul>
+        {% for preke in uzsakymas.uzsakymo_prekes.all %}
+            <li>
+                {{ preke.paslauga.pavadinimas }} - Kaina: {{ preke.paslauga.kaina }} EUR
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

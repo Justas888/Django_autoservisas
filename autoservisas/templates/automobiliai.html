@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Visi automobiliai</h1>
+<p>Visų mūsų servise registruotų automobilių sąrašas:</p>
+    <ul>
+        {% for automobilis in automobiliai %}
+            <li>
+                <a href="{% url 'automobilis-info' automobilis.id %}">{{ automobilis.modelis }}
+                </a>
+                <br/>{{ automobilis.metai }} | {{ automobilis.valst_nr }}
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

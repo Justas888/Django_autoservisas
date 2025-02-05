@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Visi užsakymai</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Užsakymo ID</th>
+                <th>Paslauga</th>
+                <th>Statusas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for uzsakymas in uzsakymai %}
+                <tr>
+                    <td><a href="{% url 'uzsakymas-detail' uzsakymas.id %}">{{ uzsakymas.id }}</a></td>
+                    <td>
+                        <ul>
+                            {% for preke in uzsakymas.uzsakymo_prekes.all %}
+                                <li>{{ preke.paslauga.pavadinimas }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <p class="{% if uzsakymas.statusas == 0 %} text-muted
+                                   {% elif uzsakymas.statusas == 1 %} text-warning
+                                   {% elif uzsakymas.statusas == 2 %} text-success
+                                   {% elif uzsakymas.statusas == 3 %} text-danger
+                                   {% else %} text-muted {% endif %}">
+                            <b>{{ uzsakymas.get_statusas_display }}</b>
+                        </p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
