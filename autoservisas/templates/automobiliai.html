@@ -6,9 +6,9 @@
     <ul>
         {% for automobilis in automobiliai %}
             <li>
-                <a href="{% url 'automobilis-info' automobilis.id %}">{{ automobilis.modelis }}
+                <a href="{% url 'automobilis-info' automobilis.id %}">Automobilis: {{ automobilis.modelis }}
                 </a>
-                <br/>{{ automobilis.metai }} | {{ automobilis.valst_nr }}
+                <br/>Pagaminimo metai: {{ automobilis.metai }} | Valst. Nr.{{ automobilis.valst_nr }}
             </li>
         {% endfor %}
     </ul>
