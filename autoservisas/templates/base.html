@@ -22,7 +22,7 @@
                 <li><a href="{% url 'automobiliai-all' %}" class="text-nowrap">Visi automobiliai</a></li>
                 <li><a href="{% url 'uzsakymai-list' %}" class="text-nowrap">Visi užsakymai</a></li>
                 <li>
-                    <form action="" method="get" class="form-group">
+                    <form action="{% url 'search' %}" method="get" class="form-group">
                         <input type="text" name="search_text" class="form-control" placeholder="Paieška" style="min-width: 6rem;">
                     </form>
                 </li>

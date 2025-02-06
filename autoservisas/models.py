@@ -40,6 +40,7 @@ class Automobilis(models.Model):
     modelis = models.ForeignKey(Modelis, on_delete=models.CASCADE)
     metai = models.IntegerField('Pagaminimo metai')
     valst_nr = models.CharField('Valstybinis numeris',max_length=20)
+    foto = models.ImageField('Foto', upload_to='foto', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Automobilis'

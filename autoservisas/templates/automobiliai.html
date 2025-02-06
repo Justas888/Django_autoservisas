@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <h1>Visi automobiliai</h1>
@@ -10,7 +11,28 @@
                 </a>
                 <br/>Pagaminimo metai: {{ automobilis.metai }} | Valst. Nr.{{ automobilis.valst_nr }}
             </li>
+            {% if automobilis.foto %}
+                <img src="{{ automobilis.foto.url }}"/>
+            {% else %}
+                <img src="{% static 'img/no-image.png' %}"/>
+            {% endif %}
         {% endfor %}
     </ul>
+{% if automobiliai.has_other_pages %}
+    <ul class="pagination pagination-sm">
+        {% for nr in automobiliai.paginator.page_range %}
+            {% if automobiliai.number == nr %}
+                <li class="page-item active">
+                    <a class="page-link">{{ nr }}</a>
+                </li>
+            {% else %}
 
+            <li class="page-item">
+                <a class="page-link" href="?page={{ nr }}">{{ nr }} </a>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+    </ul>
+{% endif %}
 {% endblock %}

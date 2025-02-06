@@ -1,9 +1,11 @@
-from lib2to3.fixes.fix_input import context
+
 
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import HttpResponse
 from django.views import generic
 from .models import Uzsakymas, Automobilis, Paslauga
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -24,7 +26,10 @@ def index(request):
 
 def automobiliai(request):
     visi_automobiliai = Automobilis.objects.all()
-    context = {'automobiliai': visi_automobiliai}
+    paginator = Paginator(visi_automobiliai, 2)
+    page_number = request.GET.get('page')
+    paged_automobiliai = paginator.get_page(page_number)
+    context = {'automobiliai': paged_automobiliai}
     return render(request, 'automobiliai.html', context=context)
 
 def automobilis(request, automobilis_id):
@@ -36,6 +41,7 @@ class UzsakymaiListView(generic.ListView):
     model = Uzsakymas
     context_object_name = 'uzsakymai'
     template_name = 'uzsakymai.html'
+    paginate_by = 5
 
     def get_queryset(self):
         return Uzsakymas.objects.all()
@@ -44,3 +50,17 @@ class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'uzsakymas.html'
+
+
+
+def search(request):
+    query = request.GET.get('search_text')
+    search_results = Automobilis.objects.filter(
+        Q(klientas__vardas__icontains=query) |
+        Q(klientas__pavarde__icontains=query) |
+        Q(modelis__modelis__icontains=query) |
+        Q(valst_nr__icontains=query)
+    )
+    context = {'query': query, 'automobiliai': search_results}
+    return render(request, 'automobiliai.html', context)
+
