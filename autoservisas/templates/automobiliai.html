@@ -5,18 +5,23 @@
 <h1>Visi automobiliai</h1>
 <p>Visų mūsų servise registruotų automobilių sąrašas:</p>
     <ul>
-        {% for automobilis in automobiliai %}
-            <li>
-                <a href="{% url 'automobilis-info' automobilis.id %}">Automobilis: {{ automobilis.modelis }}
-                </a>
-                <br/>Pagaminimo metai: {{ automobilis.metai }} | Valst. Nr.{{ automobilis.valst_nr }}
-            </li>
+        <div class="row">
+    {% for automobilis in automobiliai %}
+        <div class="col-sm-6 col-md-3 d-flex align-items-stretch">
+            <div class="card mb-4 shadow">
             {% if automobilis.foto %}
-                <img src="{{ automobilis.foto.url }}"/>
+            <img class="card-img-top" src="{{ automobilis.foto.url }}"/>
             {% else %}
-                <img src="{% static 'img/no-image.png' %}"/>
+            <img class="card-img-top" src="{% static 'img/no-image.png' %}"/>
             {% endif %}
-        {% endfor %}
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ automobilis.metai }}</h6>
+                    <p class="card-text"><a href="{% url 'automobilis-info' automobilis.id %}">{{ automobilis.modelis }}</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
     </ul>
 {% if automobiliai.has_other_pages %}
     <ul class="pagination pagination-sm">
@@ -34,5 +39,6 @@
         {% endfor %}
 
     </ul>
+
 {% endif %}
 {% endblock %}

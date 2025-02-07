@@ -1,5 +1,3 @@
-
-
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import HttpResponse
 from django.views import generic
@@ -26,7 +24,7 @@ def index(request):
 
 def automobiliai(request):
     visi_automobiliai = Automobilis.objects.all()
-    paginator = Paginator(visi_automobiliai, 2)
+    paginator = Paginator(visi_automobiliai, 8)
     page_number = request.GET.get('page')
     paged_automobiliai = paginator.get_page(page_number)
     context = {'automobiliai': paged_automobiliai}

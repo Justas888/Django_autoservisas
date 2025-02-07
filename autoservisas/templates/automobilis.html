@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     <h1>Automobilio info:</h1>
     <p><b>Savininkas:</b> {{ automobilis.klientas.vardas }} {{ automobilis.klientas.pavarde }}</p>
     <p><b>Modelis:</b> {{ automobilis.modelis }}</p>
     <p><b>Valstybinis numeris:</b> {{ automobilis.valst_nr }}</p>
     <p><b>Pagaminimo metai:</b> {{ automobilis.metai }}</p>
+          {% if automobilis.foto %}
+            <img class="card-img-top" style="width: 40%;" src="{{ automobilis.foto.url }}"/>
+          {% else %}
+            <img class="card-img-top" style="width: 40%;" src="{% static 'img/no-image.png' %}"/>
+          {% endif %}
+
 {% endblock %}
