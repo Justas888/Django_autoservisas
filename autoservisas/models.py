@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -67,6 +68,8 @@ class Uzsakymas(models.Model):
     sukurimo_data = models.DateTimeField('Sukurimo data', default=datetime.now, null=True, blank=True)
     automobilis = models.ForeignKey(Automobilis, on_delete=models.CASCADE)
     imoketa_suma = models.IntegerField('Įmokėta suma')
+    uzsakovas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
 
     NEW = 0
     IN_PROGRESS = 1
@@ -102,6 +105,7 @@ class UzsakymoPrekes(models.Model):
     kiekis = models.IntegerField()
     uzsakymas = models.ForeignKey(Uzsakymas, on_delete=models.CASCADE, related_name="uzsakymo_prekes")
     paslauga = models.ForeignKey(Paslauga, on_delete=models.CASCADE)
+
 
     # @property
     # def paslaugu_kaina(self):

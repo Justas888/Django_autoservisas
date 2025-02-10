@@ -8,4 +8,10 @@
         <li>Atliktų užsakymų kiekis: {{ atliktu_uzsakymu_kiekis }}</li>
         <li>Automobilių kiekis: {{ automobiliu_kiekis }}</li>
     </ul>
+{% if user.username %}
+    <p>Sveiki, {{ user.username }}</p>
+{% else %}
+    <p>Sveiki, svečias</p>
+{% endif %}
+<p>Jus lankotes {{ num_visits_t }} karta</p>
 {% endblock %}

@@ -9,10 +9,12 @@ class UzsakymoPrekesInline(admin.TabularInline):
     extra = 2
 
 class UzsakymasAdmin(admin.ModelAdmin):
-    list_display = ('id', 'automobilis', 'sukurimo_data', 'statusas')
+    list_display = ('id', 'automobilis', 'uzsakovas', 'sukurimo_data', 'statusas')
+    list_editable = ('uzsakovas', 'statusas')
     inlines = [UzsakymoPrekesInline]
     list_filter = ('statusas',)
     search_fields = ('automobilis__valst_nr',)
+
 
 class AutomobilisAdmin(admin.ModelAdmin):
     list_display = ('klientas', 'modelis', 'valst_nr')
