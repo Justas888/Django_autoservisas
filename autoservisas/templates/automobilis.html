@@ -6,6 +6,8 @@
     <p><b>Modelis:</b> {{ automobilis.modelis }}</p>
     <p><b>Valstybinis numeris:</b> {{ automobilis.valst_nr }}</p>
     <p><b>Pagaminimo metai:</b> {{ automobilis.metai }}</p>
+    <h4>Aprašymas:</h4> <p> {{ automobilis.aprasymas | safe }}</p>
+
           {% if automobilis.foto %}
             <img class="card-img-top" style="width: 40%;" src="{{ automobilis.foto.url }}"/>
           {% else %}

@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Visi automobiliai</h1>
 <p>Visų mūsų servise registruotų automobilių sąrašas:</p>
-    <ul>
+
         <div class="row">
     {% for automobilis in automobiliai %}
         <div class="col-sm-6 col-md-3 d-flex align-items-stretch">
@@ -22,7 +22,7 @@
         </div>
     {% endfor %}
 </div>
-    </ul>
+
 {% if automobiliai.has_other_pages %}
     <ul class="pagination pagination-sm">
         {% for nr in automobiliai.paginator.page_range %}

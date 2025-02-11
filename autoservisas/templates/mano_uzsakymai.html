@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ user }}</h1>
+<p>Mano užsakymai:</p>
+{% if uzsakymu_list %}
+<ul>
+    {% for uzsakymas in uzsakymu_list %}
+        <li>
+            Užsakymo ID: {{ uzsakymas.id }} | Automobilis: {{ uzsakymas.automobilis.modelis }}
+            <p><a href="{% url 'uzsakymas-detail' uzsakymas.id %}">{{ uzsakymas.get_statusas_display}}</a></p>
+           <p class="{% if uzsakymas.grazinimo_terminas_praejo %} text-danger">
+           {% else %} text-success">
+          {% endif %} {{ uzsakymas.grazinimo_terminas }} {{ uzsakymas.get_status_display }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Aktyvių užsakymų nėra</p>
+
+{% endif %}
+{% endblock %}

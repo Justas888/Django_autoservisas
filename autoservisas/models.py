@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 # Create your models here.
 
@@ -40,6 +41,7 @@ class Automobilis(models.Model):
     klientas = models.ForeignKey(Klientas, on_delete=models.CASCADE)
     modelis = models.ForeignKey(Modelis, on_delete=models.CASCADE)
     metai = models.IntegerField('Pagaminimo metai')
+    aprasymas = HTMLField(null=True, blank=True)
     valst_nr = models.CharField('Valstybinis numeris',max_length=20)
     foto = models.ImageField('Foto', upload_to='foto', null=True, blank=True)
 
@@ -69,7 +71,7 @@ class Uzsakymas(models.Model):
     automobilis = models.ForeignKey(Automobilis, on_delete=models.CASCADE)
     imoketa_suma = models.IntegerField('Įmokėta suma')
     uzsakovas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-
+    grazinimo_terminas = models.DateField('Gražinimo terminas', null=True, blank=True)
 
     NEW = 0
     IN_PROGRESS = 1
@@ -89,10 +91,17 @@ class Uzsakymas(models.Model):
                                  blank=True,
                                  help_text='Užsakymo statusas')
 
-    # @property
-    # def bendra_suma(self):
-    #     viso = sum([item.paslauga.kaina * item.kiekis for item in self.uzsakymo_prekes.all()])
-    #     return viso
+    @property
+    def grazinimo_terminas_praejo(self):
+        if self.grazinimo_terminas and self.grazinimo_terminas < date.today():
+            return True
+        else:
+            return False
+
+    @property
+    def bendra_suma(self):
+        viso = sum(item.paslaugu_kaina for item in self.uzsakymo_prekes.all())
+        return viso
 
     class Meta:
         verbose_name = 'Uzsakymas'
@@ -107,9 +116,9 @@ class UzsakymoPrekes(models.Model):
     paslauga = models.ForeignKey(Paslauga, on_delete=models.CASCADE)
 
 
-    # @property
-    # def paslaugu_kaina(self):
-    #     return self.paslauga.kaina * self.kiekis
+    @property
+    def paslaugu_kaina(self):
+        return self.paslauga.kaina * self.kiekis
 
     class Meta:
         verbose_name = 'Uzsakymo_Preke'

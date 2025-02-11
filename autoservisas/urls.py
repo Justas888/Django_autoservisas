@@ -10,5 +10,6 @@ urlpatterns = [
          views.UzsakymaiListView.as_view(), name='uzsakymai-list'),
     path('uzsakymas/<int:pk>/',
         views.UzsakymasDetailView.as_view(), name='uzsakymas-detail'),
-    path('search/', views.search, name='search')
+    path('search/', views.search, name='search'),
+    path('manouzsakymai/', views.OrdersByUserListView.as_view(), name='mano_uzsakymai'),
 ]

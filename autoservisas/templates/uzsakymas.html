@@ -13,11 +13,26 @@
     <p><b>Įmokėta suma:</b> {{ uzsakymas.imoketa_suma }} EUR</p>
     <p><b>Statusas:</b> {{ uzsakymas.get_statusas_display }}</p>
     <h2>Paslaugos:</h2>
-    <ul>
+<table class="table">
+        <thead>
+            <tr>
+                <th>Paslaugos pavadinimas</th>
+                <th>Kiekis</th>
+                <th>Vieneto kaina</th>
+                <th>Bendra paslaugos kaina</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for preke in uzsakymas.uzsakymo_prekes.all %}
-            <li>
-                {{ preke.paslauga.pavadinimas }} - Kaina: {{ preke.paslauga.kaina }} EUR
-            </li>
+                <tr>
+                    <td>{{ preke.paslauga.pavadinimas }}</td>
+                    <td>{{ preke.kiekis }}</td>
+                    <td>{{ preke.paslauga.kaina }} Eur.</td>
+                    <td>{{ preke.paslaugu_kaina }} Eur.</td>
+                </tr>
         {% endfor %}
-    </ul>
+        </tbody>
+</table>
+
+    <h4> <b>Bendra visų paslaugų kaina:</b> {{ uzsakymas.bendra_suma }}</h4>
 {% endblock %}
